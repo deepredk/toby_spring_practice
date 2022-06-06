@@ -1,0 +1,15 @@
+plugins {
+	id 'application'
+}
+
+group = 'com.toby'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+mainClassName = "com.toby.Main"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+}
