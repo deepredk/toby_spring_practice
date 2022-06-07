@@ -1,12 +1,15 @@
 package springbook;
 
+import springbook.user.dao.ConnectionMaker;
+import springbook.user.dao.SimpleConnectionMaker;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		UserDao dao = new UserDao();
+		ConnectionMaker connectionMaker = new SimpleConnectionMaker();
+		UserDao dao = new UserDao(connectionMaker);
 
 		User user = new User();
 		user.setId("whiteship");
