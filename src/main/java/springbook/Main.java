@@ -1,5 +1,9 @@
 package springbook;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import springbook.user.dao.DaoFactory;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
@@ -7,7 +11,8 @@ import springbook.user.domain.User;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		UserDao dao = new DaoFactory().userDao();
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		UserDao dao = context.getBean("userDao", UserDao.class);
 
 		User user = new User();
 		user.setId("whiteship");
@@ -22,6 +27,8 @@ public class Main {
 		System.out.println(user2.getName());
 		System.out.println(user2.getPassword());
 		System.out.println(user2.getId() + " 조회 성공");
+
+		((ConfigurableApplicationContext) context).close();
 	}
 
 }
