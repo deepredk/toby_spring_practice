@@ -1,13 +1,12 @@
-plugins {
-	id 'java'
-}
+group 'com.leomkim.toby_spring_practice'
+version '1.0-SNAPSHOT'
 
-group = 'com.toby'
-version = '0.0.1-SNAPSHOT'
+apply plugin: 'java'
+
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
