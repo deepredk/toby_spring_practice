@@ -1,7 +1,6 @@
 package springbook.user.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import java.sql.SQLException;
 
@@ -10,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.ejb.access.EjbAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -55,12 +54,12 @@ public class UserDaoTest {
         assertEquals(userget2.getPassword(), user2.getPassword());
 	}
 
-	@Test
+	@Test(expected=EmptyResultDataAccessException.class)
 	public void getUserFailure() throws SQLException, ClassNotFoundException {
 		dao.deleteAll();
 		assertEquals(dao.getCount(), 0);
 
-		assertThrows(EjbAccessException.class, () -> dao.get("unknown_id"));
+		dao.get("unknown_id");
 	}
 
 	@Test

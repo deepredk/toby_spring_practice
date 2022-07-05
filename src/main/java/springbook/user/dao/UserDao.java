@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.ejb.access.EjbAccessException;
 
 import springbook.user.domain.User;
@@ -51,7 +52,7 @@ public class UserDao {
         ps.close();
         c.close();
 
-        if (user == null) throw new EjbAccessException("");
+        if (user == null) throw new EmptyResultDataAccessException(1);
         return user;
     }
 
