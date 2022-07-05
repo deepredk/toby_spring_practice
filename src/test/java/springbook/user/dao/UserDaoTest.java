@@ -1,28 +1,35 @@
 package springbook.user.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.ejb.access.EjbAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import springbook.user.domain.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="/applicationContext.xml")
 public class UserDaoTest {
+	@Autowired
+	private ConfigurableApplicationContext context;
+
 	private UserDao dao;
 	private User user1;
 	private User user2;
 	private User user3;
 
-	@BeforeEach
+	@Before
 	public void setUp() {
-		ConfigurableApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-		dao = context.getBean("userDao", UserDao.class);
+		this.dao = this.context.getBean("userDao", UserDao.class);
 		context.close();
 
 		user1 = new User("gyumee", "박성철", "springno1");
