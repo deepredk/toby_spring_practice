@@ -10,11 +10,11 @@ import java.sql.*;
  * UserDao - 1장은 DB connection 관심사를 어떻게 분리할 것인가에 대해 다루면서 조금씩 코드가 개선 중이다.
  */
 public class UserDao {
-
     private DataSource dataSource;
+    private JdbcContext jdbcContext;
 
     public void add(final User user) throws SQLException {
-        jdbcContextWithStatementStrategy(
+        jdbcContext.workWithStatementStrategy(
             new StatementStrategy() {
                 @Override
                 public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
@@ -56,7 +56,7 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContextWithStatementStrategy(
+        jdbcContext.workWithStatementStrategy(
             new StatementStrategy() {
                 @Override
                 public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
@@ -65,15 +65,6 @@ public class UserDao {
                 }
             }
         );
-    }
-
-    public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
-        try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = stmt.makePreparedStatement(c)) {
-            ps.executeUpdate();
-        } catch(SQLException e) {
-            throw e;
-        }
     }
 
     public int getCount() throws SQLException {
@@ -88,5 +79,11 @@ public class UserDao {
         }
     }
 
-    public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; }
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public void setJdbcContext(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
 }
