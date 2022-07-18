@@ -50,15 +50,7 @@ public class UserDao {
     }
 
     public int getCount() throws SQLException {
-        try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement("select count(*) from users");
-             ResultSet rs = ps.executeQuery()) {
-            rs.next();
-            int count = rs.getInt(1);
-            return count;
-        } catch(SQLException e) {
-            throw e;
-        }
+        return jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
     }
 
     public void setDataSource(DataSource dataSource) {
