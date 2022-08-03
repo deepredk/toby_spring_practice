@@ -17,4 +17,6 @@ dependencies {
     implementation group: 'cglib', name: 'cglib', version: '2.2'
     testImplementation 'org.springframework:spring-test:5.0.2.RELEASE'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework:spring-context:4.1.4.RELEASE'
+    implementation 'org.springframework:spring-context-support:4.1.4.RELEASE'
 }

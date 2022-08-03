@@ -14,6 +14,11 @@
     <bean id="userService" class="springbook.user.service.UserService">
         <property name="userDao" ref="userDao"/>
         <property name="transactionManager" ref="transactionManager"/>
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="mail.naver.com" />
     </bean>
 
     <bean id="userDao" class="springbook.user.dao.UserDaoJdbc">
