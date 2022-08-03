@@ -3,12 +3,11 @@ package springbook.user.service;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,11 +26,11 @@ import static springbook.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
 @ContextConfiguration(locations = "/applicationContext-test.xml")
 public class UserServiceTest {
     @Autowired
-    private UserService userService;
+    UserService userService;
     @Autowired
-    private UserDao userDao;
+    UserDao userDao;
     @Autowired
-    private DataSource dataSource;
+    PlatformTransactionManager platformTransactionManager;
 
     List<User> users;
 
@@ -98,7 +97,7 @@ public class UserServiceTest {
     public void upgradeAllOrNothing() {
         UserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(this.userDao);
-        testUserService.setDataSource(this.dataSource);
+        testUserService.setTransactionManager(this.platformTransactionManager);
         userDao.deleteAll();
 
         for (User user : users) {
