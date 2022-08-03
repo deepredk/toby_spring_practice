@@ -3,6 +3,8 @@ package springbook.user.service;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,6 +30,8 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private DataSource dataSource;
 
     List<User> users;
 
@@ -48,7 +52,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void upgradeLevels() {
+    public void upgradeLevels() throws Exception {
         userDao.deleteAll();
         for (User user : users) {
             userDao.add(user);
@@ -94,6 +98,7 @@ public class UserServiceTest {
     public void upgradeAllOrNothing() {
         UserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(this.userDao);
+        testUserService.setDataSource(this.dataSource);
         userDao.deleteAll();
 
         for (User user : users) {
