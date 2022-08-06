@@ -133,6 +133,7 @@ public class UserDaoTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void sqlExceptionTranslate() {
         dao.deleteAll();
         
