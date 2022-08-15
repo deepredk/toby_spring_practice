@@ -161,8 +161,8 @@ public class UserServiceTest {
 
         try {
             this.testUserService.upgradeLevels();
-            fail("TestUserService throws Exception unexpectedly");
-        } catch (Exception e) {
+            fail("TestUserServiceException expected");
+        } catch (TestUserServiceException e) {
         }
 
         checkLevelUpgraded(users.get(1), false);
