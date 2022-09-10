@@ -223,7 +223,7 @@ public class UserServiceTest {
         }
 
         @Override
-        public void send(SimpleMailMessage... simpleMessages) throws MailException {
+        public void send(SimpleMailMessage[] simpleMessages) throws MailException {
             
         }
     }

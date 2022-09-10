@@ -4,6 +4,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 						http://www.springframework.org/schema/aop 
@@ -11,7 +12,9 @@
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd
 						http://www.springframework.org/schema/tx 
-						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/jdbc
+						http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
 						
 	<context:annotation-config />						
 						
@@ -33,7 +36,9 @@
 		<property name="sqlRegistry" ref="sqlRegistry" />
 	</bean>
 
-	<bean id="sqlRegistry" class="springbook.user.sqlservice.updatable.ConcurrentHashMapSqlRegistry" />
+	<bean id="sqlRegistry" class="springbook.user.sqlservice.updatable.EmbeddedDbSqlRegistry">
+		<property name="dataSource" ref="embeddedDatabase" />
+	</bean>
 
 	<bean id="unmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="contextPath" value="springbook.user.sqlservice.jaxb" />
@@ -56,4 +61,8 @@
 	<bean id="testUserService" class="springbook.user.service.UserServiceTest$TestUserService" parent="userService" />
 
 	<bean id="mailSender" class="springbook.user.service.DummyMailSender" />
+
+	<jdbc:embedded-database id="embeddedDatabase" type="HSQL">
+		<jdbc:script location="classpath:/springbook/user/sqlservice/updatable/schema.sql" />
+	</jdbc:embedded-database>
 </beans>

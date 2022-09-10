@@ -12,7 +12,7 @@ public class DummyMailSender implements MailSender {
     }
 
     @Override
-    public void send(SimpleMailMessage... simpleMessages) throws MailException {
+    public void send(SimpleMailMessage[] simpleMessages) throws MailException {
         
     }
     
