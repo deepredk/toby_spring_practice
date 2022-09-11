@@ -1,4 +1,6 @@
+
 package springbook.user.service;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.junit.Before;
 import org.junit.Test;
 
-import springbook.user.TestApplicationContext;
+import springbook.user.AppContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
@@ -39,7 +41,7 @@ import static springbook.user.service.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVER;
 import static springbook.user.service.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestApplicationContext.class)
+@ContextConfiguration(classes = AppContext.class)
 public class UserServiceTest {
     @Autowired
     UserService userService;
