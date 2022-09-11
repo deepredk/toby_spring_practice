@@ -43,7 +43,7 @@ public class EmbeddedDbSqlRegistryTest extends AbstractUpdatableSqlRegistryTest 
         try {
             sqlRegistry.updateSql(sqlmap);
             fail();
-        } catch (SqlUpdateFailureException e) { }
+        } catch (SqlUpdateFailureException e) {}
 
         checkFind("SQL1", "SQL2", "SQL3");
     }

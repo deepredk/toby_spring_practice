@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.junit.Before;
 import org.junit.Test;
 
+import springbook.user.TestApplicationContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
@@ -38,7 +39,7 @@ import static springbook.user.service.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVER;
 import static springbook.user.service.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext-test.xml")
+@ContextConfiguration(classes = TestApplicationContext.class)
 public class UserServiceTest {
     @Autowired
     UserService userService;
@@ -180,7 +181,7 @@ public class UserServiceTest {
         testUserService.getAll();
     }
 
-    static class TestUserService extends UserServiceImpl {
+    public static class TestUserService extends UserServiceImpl {
         private String id = "madnite1";
 
         @Override

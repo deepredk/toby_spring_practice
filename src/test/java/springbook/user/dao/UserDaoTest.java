@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import springbook.user.TestApplicationContext;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
@@ -28,7 +29,7 @@ import static org.junit.Assert.assertThat;
  * Created by pilhwankim on 15/12/2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext-test.xml")
+@ContextConfiguration(classes = TestApplicationContext.class)
 public class UserDaoTest {
 
     @Autowired

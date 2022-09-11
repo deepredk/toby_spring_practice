@@ -8,13 +8,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import springbook.user.TestApplicationContext;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext-test.xml")
+@ContextConfiguration(classes = TestApplicationContext.class)
 public class UserTest {
     User user;
 
