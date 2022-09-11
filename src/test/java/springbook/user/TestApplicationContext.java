@@ -2,7 +2,9 @@ package springbook.user;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -13,11 +15,11 @@ import org.springframework.mail.MailSender;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.mysql.jdbc.Driver;
 
 import springbook.user.dao.UserDao;
-import springbook.user.dao.UserDaoJdbc;
 import springbook.user.service.DummyMailSender;
 import springbook.user.service.UserService;
 import springbook.user.service.UserServiceImpl;
@@ -28,7 +30,8 @@ import springbook.user.sqlservice.SqlService;
 import springbook.user.sqlservice.updatable.EmbeddedDbSqlRegistry;
 
 @Configuration
-@ImportResource("/applicationContext-test.xml")
+@EnableTransactionManagement
+@ComponentScan(basePackages = "springbook.user")
 public class TestApplicationContext {
 
     @Bean
@@ -50,26 +53,12 @@ public class TestApplicationContext {
         return tm;
     }
 
-    @Bean
-    public UserDao userDao() {
-        UserDaoJdbc dao = new UserDaoJdbc();
-        dao.setDataSource(dataSource());
-        dao.setSqlService(sqlService());
-        return dao;
-    }
-
-    @Bean
-    public UserService userService() {
-        UserServiceImpl service = new UserServiceImpl();
-        service.setUserDao(userDao());
-        service.setMailSender(mailSender());
-        return service;
-    }
+    @Autowired UserDao userDao;
 
     @Bean
     public UserService testUserService() {
         TestUserService service = new TestUserService();
-        service.setUserDao(userDao());
+        service.setUserDao(this.userDao);
         service.setMailSender(mailSender());
         return service;
     }
