@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.mail.MailSender;
@@ -26,16 +28,26 @@ import springbook.user.service.UserService;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "springbook.user")
 @Import(SqlServiceContext.class)
+@PropertySource("/database.properties")
 public class AppContext {
 
+    @Autowired
+    Environment env;
+
     @Bean
+    @SuppressWarnings("unchecked")
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
-        dataSource.setDriverClass(Driver.class);
-        dataSource.setUrl("jdbc:mysql://localhost/springbook?characterEncoding=UTF-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1234");
+        try {
+            dataSource.setDriverClass((Class<? extends Driver>) Class.forName(env.getProperty("db.driverClass")));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUsername(env.getProperty("db.username"));
+        dataSource.setPassword(env.getProperty("db.password"));
 
         return dataSource;
     }
